@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Expense Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 45%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .column h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .total {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .total span {
+            color: green;
+            font-weight: bold;
+        }
+
+        .list {
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Expense Tracker</h1>
+        <div class="main-content">
+            <div class="column">
+                <h2>Expenses</h2>
+                <form action="/add" method="post">
+                    <input type="hidden" name="isIncome" value="false">
+                    <input type="text" name="category" placeholder="Expense Category" required>
+                    <input type="number" name="amount" placeholder="Amount" required>
+                    <button type="submit">Add Expense</button>
+                </form>
+            </div>
+            <div class="column">
+                <h2>Earnings</h2>
+                <form action="/add" method="post">
+                    <input type="hidden" name="isIncome" value="true">
+                    <input type="text" name="category" placeholder="Income Source" required>
+                    <input type="number" name="amount" placeholder="Amount" required>
+                    <button type="submit">Add Income</button>
+                </form>
+            </div>
+        </div>
+        <div class="total">
+            <h2>Total Balance: <span>${total}</span></h2>
+        </div>
+        <div class="list">
+            <h2>Expense/Earning History</h2>
+            <ul>
+                <th:block th:each="exp : ${expenses}">
+                    <li th:text="${exp.category} + ' : ' + (exp.isIncome ? '+' : '-') + exp.amount"></li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
